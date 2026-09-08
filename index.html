@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Armaan Goyal — Computer Engineering Student, Developer and Tech Enthusiast">
+  <title>Armaan Goyal | Developer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a class="logo" href="#home">AG<span>.</span></a>
+      <div class="links" id="navLinks">
+        <a href="#about">~/about</a>
+        <a href="#skills">~/skills</a>
+        <a href="#projects">~/projects</a>
+        <a href="#journey">~/journey</a>
+        <a href="#contact">~/contact</a>
+      </div>
+      <div class="actions">
+        <button id="themeBtn" aria-label="Toggle theme">☾</button>
+        <button id="menuBtn" class="menu" aria-label="Menu">☰</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero wrap">
+      <div class="heroText">
+        <div class="status"><i></i> Currently building & learning</div>
+        <p class="eyebrow">COMPUTER ENGINEERING • DEVELOPER • TECH ENTHUSIAST</p>
+        <h1>Hi, I'm <span>Armaan.</span><br>I build things.</h1>
+        <p class="lead">A Computer Engineering student who enjoys turning ideas into practical projects and understanding how technology works — from code to computer hardware.</p>
+        <div class="typing"><span id="typing"></span><b>_</b></div>
+        <div class="buttons">
+          <a class="btn primary" href="#projects">View my work ↗</a>
+          <a class="btn" href="#contact">Let's connect</a>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="terminalTop"><span>●</span><span>●</span><span>●</span><label>armaan@portfolio:~</label></div>
+        <div class="terminalBody">
+          <p><em>armaan@portfolio</em>:~$ whoami</p>
+          <strong>Armaan Goyal</strong>
+          <p><em>armaan@portfolio</em>:~$ role</p>
+          <strong class="purple">Computer Engineering Student</strong>
+          <p><em>armaan@portfolio</em>:~$ interests</p>
+          <strong>code · hardware · gaming · cars</strong>
+          <p><em>armaan@portfolio</em>:~$ status</p>
+          <strong class="green">● online</strong>
+          <div class="cmd"><span>$</span><input id="terminal" placeholder="type 'help'..." autocomplete="off"></div>
+          <div id="terminalOut"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section wrap">
+      <div class="heading"><small>01</small><h2>About me</h2></div>
+      <div class="aboutGrid">
+        <div class="aboutText">
+          <p>I'm a <b>Computer Engineering student</b> who believes the best way to learn technology is to actually build with it.</p>
+          <p>I'm interested in software development, computer systems, hardware, gaming and the technology behind the things we use every day.</p>
+        </div>
+        <div class="facts">
+          <div><small>Education</small><b>Diploma in Computer Engineering</b></div>
+          <div><small>Location</small><b>Punjab, India</b></div>
+          <div><small>Current focus</small><b>Development + Systems</b></div>
+          <div><small>Mindset</small><b>Learn → Build → Improve</b></div>
+        </div>
+      </div>
+      <div class="stats">
+        <div><b data-count="10">0+</b><span>Projects / Experiments</span></div>
+        <div><b data-count="6">0+</b><span>Technologies explored</span></div>
+        <div><b data-count="3">0+</b><span>Years learning tech</span></div>
+        <div><b>∞</b><span>Things left to learn</span></div>
+      </div>
+    </section>
+
+    <section id="skills" class="section wrap">
+      <div class="heading"><small>02</small><h2>Skills & stack</h2></div>
+      <div class="cards four">
+        <article><div class="icon">&lt;/&gt;</div><h3>Web Development</h3><p>HTML, CSS, JavaScript and responsive interface development.</p><div class="bar"><i style="width:82%"></i></div></article>
+        <article><div class="icon">C</div><h3>Programming</h3><p>C, Python and programming fundamentals with a focus on problem solving.</p><div class="bar"><i style="width:72%"></i></div></article>
+        <article><div class="icon">⚙</div><h3>Computer Systems</h3><p>Computer architecture, operating systems, hardware and system fundamentals.</p><div class="bar"><i style="width:68%"></i></div></article>
+        <article><div class="icon">DB</div><h3>Data & Backend</h3><p>Databases, backend concepts and API fundamentals.</p><div class="bar"><i style="width:58%"></i></div></article>
+      </div>
+    </section>
+
+    <section id="projects" class="section wrap">
+      <div class="heading"><small>03</small><h2>Projects</h2></div>
+      <div class="projects">
+        <article class="project featured"><small>FEATURED PROJECT · 01</small><h3>Personal Developer Portfolio</h3><p>A futuristic developer portfolio built from scratch with an interactive terminal, animations, responsive design and developer-focused UI.</p><div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive</span></div><div class="projectLinks"><a href="#home">Live Demo ↗</a><a href="https://github.com/Goyal-Armaan" target="_blank" rel="noopener">GitHub ↗</a></div></article>
+        <article class="project"><small>SYSTEMS · 02</small><h3>Computer Systems Lab</h3><p>Practical exploration of computer architecture, operating systems and low-level programming concepts.</p><div class="tags"><span>C</span><span>Architecture</span><span>Operating Systems</span></div></article>
+        <article class="project"><small>LEARNING · 03</small><h3>Programming Experiments</h3><p>A collection of programming exercises, experiments and small projects created while improving coding fundamentals.</p><div class="tags"><span>Python</span><span>C</span><span>Logic</span></div></article>
+      </div>
+    </section>
+
+    <section class="section wrap">
+      <div class="heading"><small>04</small><h2>Beyond code</h2></div>
+      <div class="cards four">
+        <article><div class="bigIcon">🎮</div><h3>Gaming</h3><p>Games, performance and gaming setups.</p></article>
+        <article><div class="bigIcon">💻</div><h3>PC Hardware</h3><p>CPUs, GPUs, builds and computer hardware.</p></article>
+        <article><div class="bigIcon">🚗</div><h3>Cars</h3><p>Performance, technology and automotive design.</p></article>
+        <article><div class="bigIcon">⚡</div><h3>Technology</h3><p>New gadgets, software and emerging tech.</p></article>
+      </div>
+    </section>
+
+    <section id="journey" class="section wrap">
+      <div class="heading"><small>05</small><h2>My journey</h2></div>
+      <div class="timeline">
+        <article><small>2024 — 2027</small><h3>Diploma in Computer Engineering</h3><p>Rayat-Bahra University Polytechnic</p><span>Programming, computer architecture, operating systems, databases, web technologies and core engineering concepts.</span></article>
+        <article><small>2026</small><h3>Building & Exploring</h3><p>Web development · Python · Systems · Hardware</p><span>Focusing on practical projects and building a stronger foundation through hands-on work.</span></article>
+        <article><small>NEXT CHAPTER</small><h3>Degree / B.Tech</h3><p>Future goal</p><span>Continue learning, build larger projects, and grow as a software and systems developer.</span></article>
+      </div>
+    </section>
+
+    <section id="contact" class="contact wrap">
+      <p class="eyebrow">LET'S BUILD SOMETHING</p>
+      <h2>Have an idea?<br><span>Let's talk.</span></h2>
+      <p>Interested in technology, projects, development or just having a good conversation about computers?</p>
+      <form id="contactForm">
+        <input id="name" required placeholder="Your name">
+        <input id="email" type="email" required placeholder="Your email">
+        <textarea id="message" required placeholder="Your message..."></textarea>
+        <button class="btn primary" type="submit">Send Message ↗</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="wrap"><span>© <b id="year"></b> Armaan Goyal</span><span>Built with curiosity & code.</span></footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
