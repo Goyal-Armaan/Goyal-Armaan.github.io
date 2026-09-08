@@ -1,33 +1,87 @@
-```javascript
 /* =========================================================
-   MOBILE MENU
+   GITHUB PAGES SAFE INITIALIZATION
 ========================================================= */
 
-const menu =
-    document.getElementById("menu");
+/*
+   This class enables the reveal animation.
+
+   If JavaScript doesn't load for any reason,
+   the CSS keeps everything visible.
+*/
+
+document.body.classList.add("js-ready");
+
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const menuBtn =
+    document.getElementById("menuBtn");
 
 const navLinks =
     document.getElementById("navLinks");
 
+const themeBtn =
+    document.getElementById("themeBtn");
 
-menu.addEventListener("click", () => {
+const paletteBtn =
+    document.getElementById("paletteBtn");
 
-    navLinks.classList.toggle("active");
+const palette =
+    document.getElementById("palette");
 
-});
+const paletteInput =
+    document.getElementById("paletteInput");
+
+const terminalInput =
+    document.getElementById("terminalInput");
+
+const terminalOutput =
+    document.getElementById("terminalOutput");
+
+const mouseGlow =
+    document.getElementById("mouseGlow");
 
 
-document
-    .querySelectorAll(".nav-links a")
-    .forEach(link => {
 
-        link.addEventListener("click", () => {
+/* =========================================================
+   MOBILE MENU
+========================================================= */
 
-            navLinks.classList.remove("active");
+if (menuBtn && navLinks) {
+
+    menuBtn.addEventListener(
+        "click",
+        () => {
+
+            navLinks.classList.toggle(
+                "active"
+            );
+
+        }
+    );
+
+
+    navLinks
+        .querySelectorAll("a")
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    navLinks.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
 
         });
 
-    });
+}
 
 
 
@@ -36,7 +90,9 @@ document
 ========================================================= */
 
 const typingText =
-    document.getElementById("typingText");
+    document.getElementById(
+        "typingText"
+    );
 
 
 const phrases = [
@@ -53,34 +109,39 @@ const phrases = [
 
 let phraseIndex = 0;
 
-let charIndex = 0;
+let characterIndex = 0;
 
-let deleting = false;
+let isDeleting = false;
 
 
 function typeEffect() {
+
+    if (!typingText) {
+        return;
+    }
+
 
     const currentPhrase =
         phrases[phraseIndex];
 
 
-    if (!deleting) {
+    if (!isDeleting) {
 
         typingText.textContent =
             currentPhrase.substring(
                 0,
-                charIndex + 1
+                characterIndex + 1
             );
 
-        charIndex++;
+        characterIndex++;
 
 
         if (
-            charIndex ===
+            characterIndex >=
             currentPhrase.length
         ) {
 
-            deleting = true;
+            isDeleting = true;
 
             setTimeout(
                 typeEffect,
@@ -97,19 +158,26 @@ function typeEffect() {
         typingText.textContent =
             currentPhrase.substring(
                 0,
-                charIndex - 1
+                characterIndex - 1
             );
 
-        charIndex--;
+        characterIndex--;
 
 
-        if (charIndex === 0) {
+        if (
+            characterIndex <= 0
+        ) {
 
-            deleting = false;
+            characterIndex = 0;
+
+            isDeleting = false;
 
             phraseIndex =
-                (phraseIndex + 1)
-                % phrases.length;
+                (
+                    phraseIndex + 1
+                )
+                %
+                phrases.length;
 
         }
 
@@ -120,7 +188,7 @@ function typeEffect() {
 
         typeEffect,
 
-        deleting
+        isDeleting
             ? 45
             : 85
 
@@ -134,46 +202,79 @@ typeEffect();
 
 
 /* =========================================================
-   SCROLL REVEAL
+   REVEAL ON SCROLL
 ========================================================= */
 
 const revealElements =
-    document.querySelectorAll(".reveal");
-
-
-const revealObserver =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (
-                    entry.isIntersecting
-                ) {
-
-                    entry.target
-                        .classList
-                        .add("show");
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold: 0.12
-        }
-
+    document.querySelectorAll(
+        ".reveal"
     );
 
 
-revealElements.forEach(element => {
+if (
+    "IntersectionObserver"
+    in window
+) {
 
-    revealObserver.observe(element);
+    const revealObserver =
+        new IntersectionObserver(
 
-});
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList
+                                .add("show");
+
+                            revealObserver
+                                .unobserve(
+                                    entry.target
+                                );
+
+                        }
+
+                    }
+                );
+
+            },
+
+            {
+                threshold: 0.08
+            }
+
+        );
+
+
+    revealElements.forEach(
+        element => {
+
+            revealObserver.observe(
+                element
+            );
+
+        }
+    );
+
+}
+else {
+
+    revealElements.forEach(
+        element => {
+
+            element.classList.add(
+                "show"
+            );
+
+        }
+    );
+
+}
 
 
 
@@ -181,81 +282,58 @@ revealElements.forEach(element => {
    MOUSE GLOW
 ========================================================= */
 
-const mouseGlow =
-    document.getElementById("mouseGlow");
+if (mouseGlow) {
 
+    document.addEventListener(
+        "mousemove",
+        event => {
 
-document.addEventListener(
-    "mousemove",
-    event => {
+            mouseGlow.style.left =
+                `${event.clientX}px`;
 
-        mouseGlow.style.left =
-            event.clientX + "px";
+            mouseGlow.style.top =
+                `${event.clientY}px`;
 
-        mouseGlow.style.top =
-            event.clientY + "px";
+        }
+    );
 
-    }
-);
+}
 
 
 
 /* =========================================================
-   THEME SWITCH
+   THEME
 ========================================================= */
-
-const themeBtn =
-    document.getElementById("themeBtn");
-
 
 function updateThemeIcon() {
 
-    const isLight =
+    if (!themeBtn) {
+        return;
+    }
+
+
+    const lightMode =
         document.body.classList.contains(
             "light"
         );
 
 
     themeBtn.textContent =
-        isLight
+        lightMode
             ? "☀"
             : "☾";
 
 }
 
 
-themeBtn.addEventListener(
-    "click",
-    () => {
-
-        document.body.classList.toggle(
-            "light"
-        );
-
-
-        const isLight =
-            document.body.classList.contains(
-                "light"
-            );
-
-
-        localStorage.setItem(
-            "theme",
-            isLight
-                ? "light"
-                : "dark"
-        );
-
-
-        updateThemeIcon();
-
-    }
-);
+const savedTheme =
+    localStorage.getItem(
+        "portfolio-theme"
+    );
 
 
 if (
-    localStorage.getItem("theme")
-    === "light"
+    savedTheme === "light"
 ) {
 
     document.body.classList.add(
@@ -268,9 +346,42 @@ if (
 updateThemeIcon();
 
 
+if (themeBtn) {
+
+    themeBtn.addEventListener(
+        "click",
+        () => {
+
+            document.body.classList.toggle(
+                "light"
+            );
+
+
+            const theme =
+                document.body.classList.contains(
+                    "light"
+                )
+                    ? "light"
+                    : "dark";
+
+
+            localStorage.setItem(
+                "portfolio-theme",
+                theme
+            );
+
+
+            updateThemeIcon();
+
+        }
+    );
+
+}
+
+
 
 /* =========================================================
-   ANIMATED STAT COUNTERS
+   STATS COUNTERS
 ========================================================= */
 
 const counters =
@@ -279,76 +390,105 @@ const counters =
     );
 
 
-const counterObserver =
-    new IntersectionObserver(
+if (
+    "IntersectionObserver"
+    in window
+) {
 
-        entries => {
+    const counterObserver =
+        new IntersectionObserver(
 
-            entries.forEach(entry => {
+            entries => {
 
-                if (
-                    !entry.isIntersecting
-                ) {
-                    return;
-                }
-
-
-                const counter =
-                    entry.target;
-
-
-                const target =
-                    Number(
-                        counter.dataset.target
-                    );
-
-
-                let current = 0;
-
-
-                const interval =
-                    setInterval(() => {
-
-                        current++;
-
-
-                        counter.textContent =
-                            current + "+";
-
+                entries.forEach(
+                    entry => {
 
                         if (
-                            current >= target
+                            !entry.isIntersecting
                         ) {
-
-                            clearInterval(
-                                interval
-                            );
-
+                            return;
                         }
 
-                    }, 90);
+
+                        const counter =
+                            entry.target;
 
 
-                counterObserver.unobserve(
-                    counter
+                        const target =
+                            Number(
+                                counter.dataset.target
+                            );
+
+
+                        let current = 0;
+
+
+                        const duration = 1000;
+
+                        const stepTime =
+                            Math.max(
+                                20,
+                                Math.floor(
+                                    duration /
+                                    target
+                                )
+                            );
+
+
+                        const interval =
+                            setInterval(
+                                () => {
+
+                                    current++;
+
+                                    counter.textContent =
+                                        `${current}+`;
+
+
+                                    if (
+                                        current >=
+                                        target
+                                    ) {
+
+                                        clearInterval(
+                                            interval
+                                        );
+
+                                    }
+
+                                },
+                                stepTime
+                            );
+
+
+                        counterObserver
+                            .unobserve(
+                                counter
+                            );
+
+                    }
                 );
 
-            });
+            },
 
-        },
+            {
+                threshold: 0.7
+            }
 
-        {
-            threshold: 0.7
+        );
+
+
+    counters.forEach(
+        counter => {
+
+            counterObserver.observe(
+                counter
+            );
+
         }
-
     );
 
-
-counters.forEach(counter => {
-
-    counterObserver.observe(counter);
-
-});
+}
 
 
 
@@ -356,50 +496,57 @@ counters.forEach(counter => {
    COMMAND PALETTE
 ========================================================= */
 
-const palette =
-    document.getElementById("palette");
-
-
-const paletteBtn =
-    document.getElementById(
-        "paletteBtn"
-    );
-
-
-const paletteInput =
-    document.getElementById(
-        "paletteInput"
-    );
-
-
 function openPalette() {
+
+    if (!palette) {
+        return;
+    }
+
 
     palette.classList.add(
         "active"
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        paletteInput.focus();
+            if (paletteInput) {
 
-    }, 50);
+                paletteInput.focus();
+
+            }
+
+        },
+        50
+    );
 
 }
 
 
 function closePalette() {
 
+    if (!palette) {
+        return;
+    }
+
+
     palette.classList.remove(
         "active"
     );
 
 
-    paletteInput.value = "";
+    if (paletteInput) {
+
+        paletteInput.value = "";
+
+    }
 
 
     document
-        .querySelectorAll(".palette-item")
+        .querySelectorAll(
+            ".palette-item"
+        )
         .forEach(item => {
 
             item.style.display =
@@ -410,14 +557,20 @@ function closePalette() {
 }
 
 
-paletteBtn.addEventListener(
-    "click",
-    openPalette
-);
+if (paletteBtn) {
+
+    paletteBtn.addEventListener(
+        "click",
+        openPalette
+    );
+
+}
 
 
 
-/* Ctrl + K */
+/* =========================================================
+   CTRL + K
+========================================================= */
 
 document.addEventListener(
     "keydown",
@@ -425,7 +578,10 @@ document.addEventListener(
 
         if (
 
-            (event.ctrlKey || event.metaKey)
+            (
+                event.ctrlKey ||
+                event.metaKey
+            )
 
             &&
 
@@ -454,26 +610,34 @@ document.addEventListener(
 
 
 
-/* Click outside palette */
+/* =========================================================
+   CLOSE PALETTE WHEN CLICKING OUTSIDE
+========================================================= */
 
-palette.addEventListener(
-    "click",
-    event => {
+if (palette) {
 
-        if (
-            event.target === palette
-        ) {
+    palette.addEventListener(
+        "click",
+        event => {
 
-            closePalette();
+            if (
+                event.target === palette
+            ) {
+
+                closePalette();
+
+            }
 
         }
+    );
 
-    }
-);
+}
 
 
 
-/* Palette navigation */
+/* =========================================================
+   PALETTE NAVIGATION
+========================================================= */
 
 document
     .querySelectorAll(
@@ -485,20 +649,26 @@ document
             "click",
             () => {
 
+                const selector =
+                    item.dataset.target;
+
+
                 const target =
                     document.querySelector(
-                        item.dataset.target
+                        selector
                     );
 
 
                 closePalette();
 
 
-                target.scrollIntoView({
+                if (target) {
 
-                    behavior: "smooth"
+                    target.scrollIntoView({
+                        behavior: "smooth"
+                    });
 
-                });
+                }
 
             }
         );
@@ -507,19 +677,26 @@ document
 
 
 
-/* GitHub command */
+/* =========================================================
+   GITHUB COMMAND
+========================================================= */
 
-document
-    .getElementById(
+const githubCommand =
+    document.getElementById(
         "githubCommand"
-    )
-    .addEventListener(
+    );
+
+
+if (githubCommand) {
+
+    githubCommand.addEventListener(
         "click",
         () => {
 
             window.open(
                 "https://github.com/Goyal-Armaan",
-                "_blank"
+                "_blank",
+                "noopener,noreferrer"
             );
 
 
@@ -528,80 +705,74 @@ document
         }
     );
 
+}
+
 
 
 /* =========================================================
    PALETTE SEARCH
 ========================================================= */
 
-paletteInput.addEventListener(
-    "input",
-    () => {
+if (paletteInput) {
 
-        const search =
-            paletteInput.value
-                .toLowerCase()
-                .trim();
+    paletteInput.addEventListener(
+        "input",
+        () => {
 
-
-        document
-            .querySelectorAll(
-                ".palette-item"
-            )
-            .forEach(item => {
-
-                const text =
-                    item.textContent
-                        .toLowerCase();
+            const search =
+                paletteInput.value
+                    .toLowerCase()
+                    .trim();
 
 
-                item.style.display =
-                    text.includes(search)
-                        ? "block"
-                        : "none";
+            document
+                .querySelectorAll(
+                    ".palette-item"
+                )
+                .forEach(item => {
 
-            });
+                    const text =
+                        item.textContent
+                            .toLowerCase();
 
-    }
-);
+
+                    item.style.display =
+                        text.includes(search)
+                            ? "block"
+                            : "none";
+
+                });
+
+        }
+    );
+
+}
 
 
 
 /* =========================================================
-   INTERACTIVE TERMINAL
+   TERMINAL
 ========================================================= */
-
-const terminalInput =
-    document.getElementById(
-        "terminalInput"
-    );
-
-
-const terminalOutput =
-    document.getElementById(
-        "terminalOutput"
-    );
-
 
 const terminalCommands = {
 
     help:
-        "Available commands: about, skills, projects, education, contact, github, clear",
+        "Available commands: about, skills, projects, education, contact, status, github, clear",
 
     about:
-        "Computer Engineering student who loves technology, coding and hardware.",
+        "I'm Armaan Goyal — a Computer Engineering student interested in development, hardware and technology.",
 
     skills:
-        "HTML · CSS · JavaScript · C · Python · Databases · Systems",
+        "HTML · CSS · JavaScript · C · Python · Databases · Computer Systems",
 
     projects:
-        "Available projects: Personal Portfolio, Computer Systems Lab, Programming Experiments.",
+        "Projects: Personal Developer Portfolio, Computer Systems Lab, Programming Experiments.",
 
     education:
         "Diploma in Computer Engineering — Rayat-Bahra University Polytechnic.",
 
     contact:
-        "Scroll down to the contact section or use the contact form.",
+        "Use the contact form at the bottom of the page.",
 
     status:
         "● Online — currently building & learning",
@@ -612,74 +783,136 @@ const terminalCommands = {
 };
 
 
-terminalInput.addEventListener(
-    "keydown",
-    event => {
+function runTerminalCommand(command) {
 
-        if (
-            event.key !== "Enter"
-        ) {
-            return;
-        }
+    if (!terminalOutput) {
+        return;
+    }
 
 
-        const command =
-            terminalInput.value
-                .trim()
-                .toLowerCase();
+    if (
+        command === "clear"
+    ) {
+
+        terminalOutput.textContent =
+            "";
+
+        return;
+
+    }
 
 
-        terminalInput.value = "";
+    if (
+        command === "github"
+    ) {
+
+        terminalOutput.textContent =
+            "Opening GitHub...";
 
 
-        if (
-            command === "clear"
-        ) {
-
-            terminalOutput.textContent =
-                "";
-
-            return;
-
-        }
+        window.open(
+            "https://github.com/Goyal-Armaan",
+            "_blank",
+            "noopener,noreferrer"
+        );
 
 
-        if (
-            command === "github"
-        ) {
+        return;
 
-            terminalOutput.textContent =
-                "Opening GitHub...";
+    }
 
 
-            window.open(
-                "https://github.com/Goyal-Armaan",
-                "_blank"
+    if (
+        terminalCommands[command]
+    ) {
+
+        terminalOutput.textContent =
+            terminalCommands[command];
+
+        return;
+
+    }
+
+
+    terminalOutput.textContent =
+        "Command not found. Type 'help'.";
+
+}
+
+
+if (terminalInput) {
+
+    terminalInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key !== "Enter"
+            ) {
+                return;
+            }
+
+
+            const command =
+                terminalInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            terminalInput.value = "";
+
+
+            if (!command) {
+                return;
+            }
+
+
+            runTerminalCommand(
+                command
             );
 
 
-            return;
+            /* Scroll commands */
+
+            const sections = {
+
+                about: "#about",
+
+                skills: "#skills",
+
+                projects: "#projects",
+
+                education: "#journey",
+
+                contact: "#contact"
+
+            };
+
+
+            if (
+                sections[command]
+            ) {
+
+                const section =
+                    document.querySelector(
+                        sections[command]
+                    );
+
+
+                if (section) {
+
+                    section.scrollIntoView({
+                        behavior: "smooth"
+                    });
+
+                }
+
+            }
 
         }
+    );
 
-
-        if (
-            terminalCommands[command]
-        ) {
-
-            terminalOutput.textContent =
-                terminalCommands[command];
-
-        }
-        else {
-
-            terminalOutput.textContent =
-                "Command not found. Type 'help'.";
-
-        }
-
-    }
-);
+}
 
 
 
@@ -687,86 +920,95 @@ terminalInput.addEventListener(
    CONTACT FORM
 ========================================================= */
 
+/*
+   CHANGE THIS EMAIL to your real email.
+*/
+
+const CONTACT_EMAIL =
+    "your-email@example.com";
+
+
 const contactForm =
     document.getElementById(
         "contactForm"
     );
 
 
-contactForm.addEventListener(
-    "submit",
-    event => {
+if (contactForm) {
 
-        event.preventDefault();
+    contactForm.addEventListener(
+        "submit",
+        event => {
 
-
-        const name =
-            document.getElementById(
-                "name"
-            ).value.trim();
+            event.preventDefault();
 
 
-        const email =
-            document.getElementById(
-                "email"
-            ).value.trim();
+            const name =
+                document.getElementById(
+                    "name"
+                ).value.trim();
 
 
-        const message =
-            document.getElementById(
-                "message"
-            ).value.trim();
+            const email =
+                document.getElementById(
+                    "email"
+                ).value.trim();
 
 
-        const subject =
-            encodeURIComponent(
-                "Portfolio Contact from "
-                + name
-            );
+            const message =
+                document.getElementById(
+                    "message"
+                ).value.trim();
 
 
-        const body =
-            encodeURIComponent(
-
-                "Name: "
-                + name
-
-                + "\n\nEmail: "
-                + email
-
-                + "\n\nMessage:\n"
-                + message
-
-            );
+            const subject =
+                encodeURIComponent(
+                    `Portfolio Contact from ${name}`
+                );
 
 
-        window.location.href =
+            const body =
+                encodeURIComponent(
 
-            "mailto:beingoyal@gmail.com"
+                    `Name: ${name}\n\n` +
 
-            + "?subject="
-            + subject
+                    `Email: ${email}\n\n` +
 
-            + "&body="
-            + body;
+                    `Message:\n${message}`
 
-    }
-);
+                );
+
+
+            window.location.href =
+
+                `mailto:${CONTACT_EMAIL}` +
+
+                `?subject=${subject}` +
+
+                `&body=${body}`;
+
+        }
+    );
+
+}
 
 
 
 /* =========================================================
-   KONAMI CODE EASTER EGG
+   KONAMI CODE
 ========================================================= */
 
 const konamiCode = [
 
     "ArrowUp",
     "ArrowUp",
+
     "ArrowDown",
     "ArrowDown",
+
     "ArrowLeft",
     "ArrowRight",
+
     "ArrowLeft",
     "ArrowRight"
 
@@ -793,12 +1035,19 @@ document.addEventListener(
                 konamiCode.length
             ) {
 
-                document
-                    .getElementById(
+                const easterEgg =
+                    document.getElementById(
                         "easterEgg"
-                    )
-                    .classList
-                    .add("active");
+                    );
+
+
+                if (easterEgg) {
+
+                    easterEgg.classList.add(
+                        "active"
+                    );
+
+                }
 
 
                 konamiIndex = 0;
@@ -821,14 +1070,34 @@ document.addEventListener(
    CLOSE EASTER EGG
 ========================================================= */
 
-function closeEgg() {
+const closeEgg =
+    document.getElementById(
+        "closeEgg"
+    );
 
-    document
-        .getElementById(
-            "easterEgg"
-        )
-        .classList
-        .remove("active");
+
+if (closeEgg) {
+
+    closeEgg.addEventListener(
+        "click",
+        () => {
+
+            const easterEgg =
+                document.getElementById(
+                    "easterEgg"
+                );
+
+
+            if (easterEgg) {
+
+                easterEgg.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
 
 }
 
@@ -838,8 +1107,36 @@ function closeEgg() {
    CURRENT YEAR
 ========================================================= */
 
-document.getElementById(
-    "year"
-).textContent =
-    new Date().getFullYear();
-```
+const year =
+    document.getElementById(
+        "year"
+    );
+
+
+if (year) {
+
+    year.textContent =
+        new Date().getFullYear();
+
+}
+
+
+
+/* =========================================================
+   CONSOLE EASTER EGG
+========================================================= */
+
+console.log(
+    "%c👋 Hey, developer!",
+    "font-size: 20px; font-weight: bold;"
+);
+
+console.log(
+    "%cWelcome to Armaan's portfolio.",
+    "font-size: 13px;"
+);
+
+console.log(
+    "%cTry the terminal. Type: help",
+    "font-size: 12px;"
+);
